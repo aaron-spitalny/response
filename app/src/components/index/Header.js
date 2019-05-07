@@ -31,7 +31,7 @@ class Header extends React.Component {
 		this.handleAbandonedFile = this.handleAbandonedFile.bind(this);
 	}
 
-	handleAbandonedFile(event) {
+	handleAbandonedFile(file) {
 		var reader = new FileReader();
 		reader.onload = function(e) {
 			var data = new Uint8Array(e.target.result);
@@ -41,10 +41,11 @@ class Header extends React.Component {
 				XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
 			);
 		}.bind(this);
-		reader.readAsArrayBuffer(event.target.files[0]);
+		reader.readAsArrayBuffer(file);
 	}
 
-	handleActivityFile(event) {
+	handleActivityFile(file) {
+		console.log(file);
 		var reader = new FileReader();
 		reader.onload = function(e) {
 			var data = new Uint8Array(e.target.result);
@@ -54,7 +55,7 @@ class Header extends React.Component {
 				XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
 			);
 		}.bind(this);
-		reader.readAsArrayBuffer(event.target.files[0]);
+		reader.readAsArrayBuffer(file);
 	}
 	render() {
 		const classes = this.props.classes;
@@ -98,7 +99,7 @@ class Header extends React.Component {
 							{" "}
 							Activity Detail:{" "}
 							<input
-								onChange={this.handleActivityFile}
+								onChange={(e) => this.handleActivityFile(e.target.files[0])}
 								accept=".xlsx, .xls, .csv"
 								multiple
 								type="file"
@@ -108,7 +109,7 @@ class Header extends React.Component {
 							{" "}
 							Abandoned Call:{" "}
 							<input
-								onChange={this.handleAbandonedFile}
+								onChange={(e) => this.handleAbandonedFile(e.target.files[0])}
 								accept=".xlsx, .xls, .csv"
 								multiple
 								type="file"

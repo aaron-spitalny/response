@@ -21,7 +21,8 @@ function getData(data) {
 		size: 5,
 		color: event["Activity Type"] == "State" ? "#00ffff" : "#ffb939",
 		activityType: event["Activity Type"],
-		activityDetail: event["Activity Detail"]
+		activityDetail: event["Activity Detail"],
+		
 	}));
 }
 

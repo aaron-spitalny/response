@@ -20,30 +20,28 @@ function getAbandonedData(data) {
 	let hours = [];
 	for (let i = 0; i < data.length; i++) {
 		if (data[i]["Date and Time"]) {
-			if (currentHour && currentHour.y > 0) {
-				currentHour.callCenter = JSON.stringify(currentHour.callCenter);
-				hours.push(currentHour);
+			currentHour = data[i]["Date and Time"];
+			if (currentHour && data[i]["Calls Abandoned"].abandoned > 0) {
+				hours.push({
+					x: new Date(currentHour).getTime(),
+					y: data[i]["Call Center Name"],
+					color: "b63295",
+					size: data[i]["Calls Abandoned"],
+					abandoned: data[i]["Calls Abandoned"],
+					queued: data[i]["Calls Queued"],
+					opacity: 0.5
+				});
 			}
-			currentHour = {
-				x: new Date(data[i]["Date and Time"]).getTime(),
-				y: data[i]["Calls Abandoned"],
-				color: "b63295",
-				size: 5,
-				callCenter: [
-					{
-						name: data[i]["Call Center Name"],
-						abandoned: data[i]["Calls Abandoned"],
-						queued: data[i]["Calls Queued"]
-					}
-				]
-			};
 		} else if (data[i]["Call Center Name"] !== "Summary") {
-			currentHour.callCenter.push({
-				name: data[i]["Call Center Name"],
+			hours.push({
+				x: new Date(currentHour).getTime(),
+				y: data[i]["Call Center Name"],
+				color: "b63295",
+				size: data[i]["Calls Abandoned"],
 				abandoned: data[i]["Calls Abandoned"],
-				queued: data[i]["Calls Queued"]
+				queued: data[i]["Calls Queued"],
+				opacity: 0.5
 			});
-			currentHour.y += data[i]["Calls Abandoned"];
 		}
 	}
 	return hours;
@@ -67,6 +65,7 @@ class ScatterPlotAbandoned extends React.Component {
 			let data = getAbandonedData(
 				newProp.abandoned.slice(0, newProp.abandoned.length - 9)
 			);
+			console.log(data);
 			this.setState({
 				data: data,
 				originalData: data
@@ -132,7 +131,7 @@ class ScatterPlotAbandoned extends React.Component {
 						right: 20
 					}}
 					xType="time"
-					yType="linear"
+					yType="ordinal"
 					onMouseLeave={() =>
 						this.setState({
 							value: false
@@ -161,9 +160,9 @@ class ScatterPlotAbandoned extends React.Component {
 						position="start"
 					/>
 					<MarkSeries
+						sizeRange={[5, 15]}
 						animation={true}
 						className={"mark-series-example"}
-						sizeType="literal"
 						seriesId="my-example-scatterplot"
 						colorType="literal"
 						data={this.state.data}
@@ -186,7 +185,11 @@ class ScatterPlotAbandoned extends React.Component {
 								horizontal: "left"
 							}}>
 							<div className="rv-hint__content">
-								<div> # of calls abandoned: {this.state.value.y} </div>
+								<div>
+									Center: {
+										this.state.value.y
+									}
+								</div>
 								<div>
 									Date:{" "}
 									{new Date(
@@ -196,6 +199,16 @@ class ScatterPlotAbandoned extends React.Component {
 										new Date(
 											this.state.value.x
 										).toLocaleTimeString()}
+								</div>
+								<div>
+									Abandoned: {
+										this.state.value.abandoned
+									}
+								</div>
+								<div>
+									Queued: {
+										this.state.value.queued
+									}
 								</div>
 							</div>
 						</Hint>
