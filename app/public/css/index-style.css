@@ -1,0 +1,18 @@
+html, body {
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+div,span, button {
+    outline: none;
+}
+
+input[type="text"], input {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+a,ul {
+    outline: none !important;
+    box-shadow: none !important;
+}
