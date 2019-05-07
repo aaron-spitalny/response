@@ -150,10 +150,14 @@ class ScatterPlotAbandoned extends React.Component {
 						title="Date"
 					/>
 					<YAxis
+						width={70}
 						style={{
 							title: {
 								fill: "#031e20"
-							}
+							},
+							line: { stroke: "#ADDDE1" },
+							ticks: { paddingLeft: 30 },
+							text: { zIndex: 25 }
 						}}
 						title="#Abandoned"
 						orientation="left"
@@ -185,11 +189,7 @@ class ScatterPlotAbandoned extends React.Component {
 								horizontal: "left"
 							}}>
 							<div className="rv-hint__content">
-								<div>
-									Center: {
-										this.state.value.y
-									}
-								</div>
+								<div>Center: {this.state.value.y}</div>
 								<div>
 									Date:{" "}
 									{new Date(
@@ -201,15 +201,9 @@ class ScatterPlotAbandoned extends React.Component {
 										).toLocaleTimeString()}
 								</div>
 								<div>
-									Abandoned: {
-										this.state.value.abandoned
-									}
+									Abandoned: {this.state.value.abandoned}
 								</div>
-								<div>
-									Queued: {
-										this.state.value.queued
-									}
-								</div>
+								<div>Queued: {this.state.value.queued}</div>
 							</div>
 						</Hint>
 					) : null}

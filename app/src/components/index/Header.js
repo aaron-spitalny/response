@@ -27,8 +27,45 @@ class Header extends React.Component {
 		this.state = {
 			open: false
 		};
+		this.getDataForAbandonedDemo = this.getDataForAbandonedDemo.bind(this);
+		this.getDataForActivityDemo = this.getDataForActivityDemo.bind(this);
 		this.handleActivityFile = this.handleActivityFile.bind(this);
 		this.handleAbandonedFile = this.handleAbandonedFile.bind(this);
+	}
+
+	componentDidMount() {
+		this.getDataForAbandonedDemo();
+		this.getDataForActivityDemo();
+	}
+
+	getDataForAbandonedDemo() {
+		var req = new XMLHttpRequest();
+		req.open("GET", "/data/C4G Call Data Abandoned Call.xlsx", true);
+		req.responseType = "arraybuffer";
+		req.onload = e => {
+			var data = new Uint8Array(req.response);
+			var workbook = XLSX.read(data, { type: "array" });
+			var sheet_name_list = workbook.SheetNames;
+			this.props.changeAbandoned(
+				XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
+			);
+		};
+		req.send();
+	}
+
+	getDataForActivityDemo() {
+		var req = new XMLHttpRequest();
+		req.open("GET", "/data/C4G Call Data Agent Activity Detail.xlsx", true);
+		req.responseType = "arraybuffer";
+		req.onload = e => {
+			var data = new Uint8Array(req.response);
+			var workbook = XLSX.read(data, { type: "array" });
+			var sheet_name_list = workbook.SheetNames;
+			this.props.changeActivities(
+				XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
+			);
+		};
+		req.send();
 	}
 
 	handleAbandonedFile(file) {
@@ -45,7 +82,6 @@ class Header extends React.Component {
 	}
 
 	handleActivityFile(file) {
-		console.log(file);
 		var reader = new FileReader();
 		reader.onload = function(e) {
 			var data = new Uint8Array(e.target.result);
@@ -99,7 +135,9 @@ class Header extends React.Component {
 							{" "}
 							Activity Detail:{" "}
 							<input
-								onChange={(e) => this.handleActivityFile(e.target.files[0])}
+								onChange={e =>
+									this.handleActivityFile(e.target.files[0])
+								}
 								accept=".xlsx, .xls, .csv"
 								multiple
 								type="file"
@@ -109,7 +147,9 @@ class Header extends React.Component {
 							{" "}
 							Abandoned Call:{" "}
 							<input
-								onChange={(e) => this.handleAbandonedFile(e.target.files[0])}
+								onChange={e =>
+									this.handleAbandonedFile(e.target.files[0])
+								}
 								accept=".xlsx, .xls, .csv"
 								multiple
 								type="file"
