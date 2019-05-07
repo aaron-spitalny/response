@@ -21,8 +21,7 @@ function getData(data) {
 		size: 5,
 		color: event["Activity Type"] == "State" ? "#00ffff" : "#ffb939",
 		activityType: event["Activity Type"],
-		activityDetail: event["Activity Detail"],
-
+		activityDetail: event["Activity Detail"]
 	}));
 }
 
@@ -161,7 +160,7 @@ class ScatterPlotActivity extends React.Component {
 							value={this.state.value}
 							align={{
 								vertical: "top",
-								horizontal: "left"
+								horizontal: "right"
 							}}>
 							<div className="rv-hint__content">
 								<div> Agent: {this.state.value.y} </div>

@@ -46,7 +46,6 @@ function getAbandonedData(data) {
 			}
 		}
 	}
-	console.log(hours);
 	return hours;
 }
 
@@ -68,7 +67,6 @@ class ScatterPlotAbandoned extends React.Component {
 			let data = getAbandonedData(
 				newProp.abandoned.slice(0, newProp.abandoned.length - 9)
 			);
-			console.log(data);
 			this.setState({
 				data: data,
 				originalData: data

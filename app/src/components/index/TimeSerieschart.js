@@ -39,6 +39,7 @@ function getActivityData(data) {
 }
 
 function getAbandonedData(data) {
+	let hours = [];
 	let currentDay;
 	return data.reduce((accum, curr) => {
 		if (
@@ -58,7 +59,7 @@ function getAbandonedData(data) {
 				"YYYY/MM/DD"
 			);
 		} else if (curr["Call Center Name"] === "Summary") {
-			accum[currentDay].y = curr["Calls Abandoned"];
+			accum[currentDay].y = curr["Calls Abandoned"] + accum[currentDay].y;
 		}
 		return accum;
 	}, {});
@@ -204,8 +205,10 @@ class TimeSerieschart extends Component {
 					}}
 					tickLabelAngle={-90}
 					height={200}
+					width={70}
 				/>
 				<YAxis
+					hideLine
 					style={{ title: { fill: "#031e20" } }}
 					title="#Abandoned"
 				/>
