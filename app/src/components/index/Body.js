@@ -75,7 +75,7 @@ class Body extends React.Component {
 								<Button
 									variant="outlined"
 									onClick={() =>
-										this.prop.changeDrawLocation(null)
+										this.props.changeDrawLocation(null)
 									}>
 									Reset Zoom
 								</Button>
