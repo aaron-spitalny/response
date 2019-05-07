@@ -21,7 +21,7 @@ function getAbandonedData(data) {
 	for (let i = 0; i < data.length; i++) {
 		if (data[i]["Date and Time"]) {
 			currentHour = data[i]["Date and Time"];
-			if (currentHour && data[i]["Calls Abandoned"].abandoned > 0) {
+			if (currentHour && data[i]["Calls Abandoned"] > 0) {
 				hours.push({
 					x: new Date(currentHour).getTime(),
 					y: data[i]["Call Center Name"],
@@ -33,17 +33,20 @@ function getAbandonedData(data) {
 				});
 			}
 		} else if (data[i]["Call Center Name"] !== "Summary") {
-			hours.push({
-				x: new Date(currentHour).getTime(),
-				y: data[i]["Call Center Name"],
-				color: "b63295",
-				size: data[i]["Calls Abandoned"],
-				abandoned: data[i]["Calls Abandoned"],
-				queued: data[i]["Calls Queued"],
-				opacity: 0.5
-			});
+			if (data[i]["Calls Abandoned"] > 0) {
+				hours.push({
+					x: new Date(currentHour).getTime(),
+					y: data[i]["Call Center Name"],
+					color: "b63295",
+					size: data[i]["Calls Abandoned"],
+					abandoned: data[i]["Calls Abandoned"],
+					queued: data[i]["Calls Queued"],
+					opacity: 0.5
+				});
+			}
 		}
 	}
+	console.log(hours);
 	return hours;
 }
 

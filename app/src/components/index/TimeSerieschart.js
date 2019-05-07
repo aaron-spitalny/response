@@ -144,9 +144,7 @@ class TimeSerieschart extends Component {
 	render() {
 		const updateDragState = area => {
 			if (area && area.right && area.left) {
-				this.props.changeSelectedPoints([
-					area.left,area.right
-				]);
+				this.props.changeSelectedPoints([area.left, area.right]);
 			}
 		};
 		return (
@@ -198,8 +196,19 @@ class TimeSerieschart extends Component {
 						</div>
 					</Hint>
 				)}
-				<XAxis title="Date" style={{ title: { fill: "#031e20" } }} tickLabelAngle={-90} height={200}/>
-				<YAxis style={{ title: { fill: "#031e20" } }} title="#Abandoned"/>
+				<XAxis
+					title="Date"
+					style={{
+						title: { fill: "#031e20" },
+						ticks: { paddingBottom: 20 }
+					}}
+					tickLabelAngle={-90}
+					height={200}
+				/>
+				<YAxis
+					style={{ title: { fill: "#031e20" } }}
+					title="#Abandoned"
+				/>
 			</XYPlot>
 		);
 	}
