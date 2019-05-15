@@ -34,8 +34,8 @@ class Header extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getDataForAbandonedDemo();
-		this.getDataForActivityDemo();
+		//this.getDataForAbandonedDemo();
+		//this.getDataForActivityDemo();
 	}
 
 	getDataForAbandonedDemo() {
